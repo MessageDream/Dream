@@ -65,13 +65,13 @@ func CreateDb() bool {
 		mg.CreateTableIfNotExists(new(models.File))
 
 		//用户等级划分：正数是普通用户，负数是管理员各种等级划分，为0则尚未注册
-		/*if GetUserByRole(-1000).Role != -1000 {
-			AddUser("root@localhost", "root", "系统默认管理员", utils.Encrypt_password("rootpass", nil), -1000)
+		if GetUserByRole(-1000).Role != -1000 {
+			AddUser("root@localhost", "root", "系统默认管理员", "rootpass", -1000)
 			fmt.Println("Default User:root,Password:rootpass")
 
 			if GetAllTopic(0, 0, "id") == nil {
 				//分類默認數據
-				AddCategory("Category！", "This is Category！")
+				AddCategory("English！", "This is EnglishCategory！")
 
 				AddNode("Node！", "This is Node!", 1, 1)
 				SetTopic(0, 1, 1, 1, 0, "Topic Title", `<p>This is Topic!</p>`, "root", "")
@@ -79,7 +79,7 @@ func CreateDb() bool {
 			}
 		}
 
-		if GetKV("author") != "Insion" {
+		/*if GetKV("author") != "Insion" {
 			SetKV("author", "Insion")
 			SetKV("title", "Toropress")
 			SetKV("title_en", "Toropress")
