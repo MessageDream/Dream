@@ -24,7 +24,7 @@ func RegisterDb() {
 
 	switch {
 	case dbtypeset == "sqlite":
-		qbs.Register("sqlite3", "../data/sqlite.db", "", qbs.NewSqlite3())
+		qbs.Register(sqlite3Driver, "../data/sqlite.db", "", qbs.NewSqlite3())
 
 	case dbtypeset == "mysql":
 		qbs.Register("mysql", "root:@/english?charset=utf8&parseTime=true&loc=Local", DbName, qbs.NewMysql())
@@ -71,11 +71,22 @@ func CreateDb() bool {
 
 			if GetAllTopic(0, 0, "id") == nil {
 				//分類默認數據
-				AddCategory("English！", "This is EnglishCategory！")
-
-				AddNode("Node！", "This is Node!", 1, 1)
-				SetTopic(0, 1, 1, 1, 0, "Topic Title", `<p>This is Topic!</p>`, "root", "")
-
+				AddCategory("双语阅读", "中英文阅读！")
+				AddCategory("微英语", "点点滴滴，记录在心！")
+				AddCategory("每日一笑", "笑一笑，十年少！")
+				AddCategory("好歌推荐", "一首好歌，表达心意！")
+				AddNode("默认", "default", 1, 1)
+				AddNode("单词", "word", 2, 1)
+				AddNode("句子", "sentence", 2, 1)
+				AddNode("测试", "test", 2, 1)
+				AddNode("默认", "default", 3, 1)
+				AddNode("默认", "default", 4, 1)
+				SetTopic(0, 1, 1, 1, 0, "奥巴马演讲", `<p>This is Topic!</p>`, "root", "")
+				SetTopic(0, 2, 1, 1, 0, "单词", `<p>This is a word</p>`, "root", "")
+				SetTopic(0, 2, 2, 1, 0, "句子", `<p>This is a sentence!</p>`, "root", "")
+				SetTopic(0, 2, 3, 1, 0, "测试", `<p>This is a Test</p>`, "root", "")
+				SetTopic(0, 3, 1, 1, 0, "笑话", `<p>This is a joke!</p>`, "root", "")
+				SetTopic(0, 4, 1, 1, 0, "歌曲", `<p>This is a song!</p>`, "root", "")
 			}
 		}
 
