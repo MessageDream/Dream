@@ -33,63 +33,74 @@
 				<div class="box1">
 					<div class="line1">
 						<div class="line2 wrapper">
-							 {{range .topics_latest}}
-							 {{$id:=.Id}}
-							 {{if compare $id 1}}
+							 {{$top1:=index .topics_micro 0}}
+							 {{$top2:=index .topics_micro 1}}
+							 {{$top3:=index .topics_micro 2}}
 						<section class="col1">
-							<h2><strong>T</strong>rue<span>Story 1</span></h2>
+							<h2><strong>M</strong>icro<span>Word</span></h2>
 							<div class="pad_bot1"><figure><img src="../static/images/page1_img1.jpg" alt=""></figure></div>
+							{{with $top1}}
 							{{str2html .Content}}
+							{{end}}
 							<a href="#" class="button1">Read More</a>
 						</section>
-						{{end}}
-						 {{if compare $id 2}}
 						<section class="col1 pad_left1">
-							<h2 class="color2"><strong>T</strong>rue<span>Story 2</span></h2>
+							<h2 class="color2"><strong>M</strong>icro<span>Sentence</span></h2>
 							<div class="pad_bot1"><figure><img src="../static/images/page1_img2.jpg" alt=""></figure></div>
+							{{with $top2}}
 							{{str2html .Content}}
+							{{end}}
 							<a href="#" class="button1 color2">Read More</a>
 						</section>
-						{{end}}
-						 {{if compare $id 3}}
+
 						<section class="col1 pad_left1">
-							<h2 class="color3"><strong>T</strong>rue<span>Story 3</span></h2>
+							<h2 class="color3"><strong>M</strong>icro<span>Test</span></h2>
 							<div class="pad_bot1"><figure><img src="../static/images/page1_img3.jpg" alt=""></figure></div>
+							{{with $top3}}
 							{{str2html .Content}}
+							{{end}}
 							<a href="#" class="button1 color3">Read More</a>
 						</section>
-						{{end}}
-					 {{end}}
 					</div>
 				</div>
 				</div>	
 			</div>
 			<div class="wrapper">
-				<h3>Our Mission</h3>
+				<h3>Read Essay</h3>
 				<p class="quot">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid- idunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerci- tation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.<img src="../static/images/quot2.png" alt="">
+					看世界，学英语<img src="../static/images/quot2.png" alt=""/>
 				</p>
 			</div>
 			<div class="wrapper">
+				
 				<div class="box2">
 					<div class="line1"><div class="line2 wrapper">
+						 {{$top1:=index .topics_read 0}}
+						 {{$top2:=index .topics_read 1}}
+						 {{$top3:=index .topics_read 2}}
 						<section class="col1">
+							{{with $top1}}
 							<h4><span>June 31</span>2011</h4>
-							<p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
-							<p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
+							<p class="pad_bot2"><strong>{{.Title}}</strong></p>
+							<p>{{str2html .Content}}</p>
 							<a href="#" class="button2">Read More</a>
+							{{end}}
 						</section>
 						<section class="col1 pad_left1">
+							{{with $top2}}
 							<h4 class="color2"><span>June 29</span>2011</h4>
-							<p class="pad_bot2"><strong>At veroeos et accusamus etiusto</strong></p>
-							<p>Architecto beatae vitae dicta sunt explicabo emo enim ipsam.</p>
+							<p class="pad_bot2"><strong>{{.Title}}</strong></p>
+							<p>{{str2html .Content}}</p>
 							<a href="#" class="button2 color2">Read More</a>
+							{{end}}
 						</section>
 						<section class="col1 pad_left1">
+							{{with $top3}}
 							<h4 class="color3"><span>June 17</span>2011</h4>
-							<p class="pad_bot2"><strong>Temporibus quibusdam</strong></p>
-							<p>Magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+							<p class="pad_bot2"><strong>{{.Title}}</strong></p>
+							<p>{{str2html .Content}}</p>
 							<a href="#" class="button2 color3">Read More</a>
+							{{end}}
 						</section>
 					</div></div>
 				</div>
@@ -98,7 +109,6 @@
 <!-- / content -->
 <script type="text/javascript">Cufon.now();</script>
 <script>
-var tap={{.topics_latest}};
     $(window).load(function () {
         $('.slider')._TMS({
             preset: 'zabor',
@@ -129,11 +139,5 @@ var tap={{.topics_latest}};
                 $(this).css({ backgroundPosition: '0 0' }).find('a').stop().animate({ backgroundPosition: '-250px 0' }, 600, 'easeOutExpo');
             }
         });
-
-
     })
-
-function initData(obj){
-
-}
 </script>

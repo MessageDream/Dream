@@ -11,45 +11,38 @@ type MainHandler struct {
 }
 
 func (self *MainHandler) Get() {
+	cid, _ := self.GetInt(":cid")
 	page, _ := self.GetInt("page")
 	curtab, _ := self.GetInt("tab")
-	cid, _ := self.GetInt(":cid")
-	limit := 25
+	limit := 20
 	home := "false"
 	if cid == 0 {
 		home = "true"
+		self.Data["topics_read"] = bll.GetAllTopicByCid(1, 0, 3, 0, "id")
+		self.Data["topics_micro"] = bll.GetAllTopicByCid(2, 0, 3, 0, "id")
+		self.Data["topics_joke"] = bll.GetAllTopicByCid(3, 0, 3, 0, "id")
+		self.Data["topics_song"] = bll.GetAllTopicByCid(4, 0, 3, 0, "id")
+	} else {
+		self.Data["curtab"] = curtab
+		topics_rcs := len(bll.GetAllTopicByCid(cid, 0, 0, 0, "hotness"))
+		topics_pages, topics_pageout, topics_beginnum, topics_endnum, offset := common.Pages(topics_rcs, int(page), limit)
+		switch cid {
+		case 1:
+			self.Data["topics_read"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "id")
+			self.Data["topics_pagesbar_tab1"] = common.Pagesbar("tab=1&", topics_rcs, topics_pages, topics_pageout, topics_beginnum, topics_endnum, 1)
+		case 2:
+			self.Data["topics_micro"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "id")
+		case 3:
+			self.Data["topics_joke"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "id")
+		case 4:
+			self.Data["topics_song"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "id")
+		}
 	}
 
 	self.Data["home"] = home
 	self.Data["curcate"] = cid
-	self.Data["curtab"] = curtab
-
-	topics_rcs := len(bll.GetAllTopicByCid(cid, 0, 0, 0, "hotness"))
-	topics_pages, topics_pageout, topics_beginnum, topics_endnum, offset := common.Pages(topics_rcs, int(page), limit)
-
-	self.Data["topics_latest"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "id")
-	self.Data["topics_hotness"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "hotness")
-	self.Data["topics_views"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "views")
-	self.Data["topics_reply_count"] = bll.GetAllTopicByCid(cid, offset, limit, 0, "reply_count")
-
-	self.Data["topics_pagesbar_tab1"] = common.Pagesbar("tab=1&", topics_rcs, topics_pages, topics_pageout, topics_beginnum, topics_endnum, 1)
-	self.Data["topics_pagesbar_tab2"] = common.Pagesbar("tab=2&", topics_rcs, topics_pages, topics_pageout, topics_beginnum, topics_endnum, 1)
-	self.Data["topics_pagesbar_tab3"] = common.Pagesbar("tab=3&", topics_rcs, topics_pages, topics_pageout, topics_beginnum, topics_endnum, 1)
-	self.Data["topics_pagesbar_tab4"] = common.Pagesbar("tab=4&", topics_rcs, topics_pages, topics_pageout, topics_beginnum, topics_endnum, 1)
-
-	nodes_rcs := len(bll.GetAllNodeByCid(cid, 0, 0, 0, "hotness"))
-	nodes_pages, nodes_pageout, nodes_beginnum, nodes_endnum, offset := common.Pages(nodes_rcs, int(page), limit)
-
-	self.Data["nodes_latest"] = bll.GetAllNodeByCid(cid, offset, limit, 0, "id")
-	self.Data["nodes_hotness"] = bll.GetAllNodeByCid(cid, offset, limit, 0, "hotness")
-	self.Data["nodes_views"] = bll.GetAllNodeByCid(cid, offset, limit, 0, "views")
-
-	self.Data["nodes_pagesbar_tab5"] = common.Pagesbar("tab=5&", nodes_rcs, nodes_pages, nodes_pageout, nodes_beginnum, nodes_endnum, 1)
-	self.Data["nodes_pagesbar_tab6"] = common.Pagesbar("tab=6&", nodes_rcs, nodes_pages, nodes_pageout, nodes_beginnum, nodes_endnum, 1)
-	self.Data["nodes_pagesbar_tab7"] = common.Pagesbar("tab=7&", nodes_rcs, nodes_pages, nodes_pageout, nodes_beginnum, nodes_endnum, 1)
 
 	self.Layout = "layout.html"
 	self.TplNames = "index.html"
-	//self.Render()
 
 }
